@@ -1,0 +1,359 @@
+
+
+
+
+SHELL PROGRAMS
+
+1.A shell script to print whether the given number is an Armstrong number or not. 
+
+
+echo "enter the number:"
+read value
+number=$value
+buf1=0
+buf2=0
+sum=0
+while [ $number -gt 0 ]
+do
+buf1=`expr $number % 10`
+buf2=`expr $buf1 \* $buf1 \* $buf1`
+sum=`expr $sum + $buf2`
+number=`expr $number / 10`
+done
+if [ $sum -eq $value ]
+then
+echo "number is armstrong"
+else
+echo "number not armstrong"
+fi
+
+
+~
+"armstrong.sh" 20L, 307C written
+[dmgv@LinuxServer ~]$ sh armstrong.sh
+enter the number:
+370
+number is armstrong
+[dmgv@LinuxServer ~]$ sh armstrong.sh
+enter the number:
+371
+number is armstrong
+[dmgv@LinuxServer ~]$ sh armstrong.sh
+enter the number:
+478
+number not armstrong
+[dmgv@LinuxServer ~]$
+
+
+2.A shell script to display the details of files and directoies along with permissions.
+
+
+
+
+
+for a in $@
+do
+if [ -s $a ]
+then
+echo $a "file exist"
+else
+echo $a "empty file"
+fi
+if [ -f $a ]
+then
+echo $a "it is a file"
+else
+echo $a "not a file"
+fi
+if [ -d $a ]
+then
+echo $a "it is a directory"
+else
+echo $a " is not a directory"
+fi
+if [ -r $a ]
+then
+echo $a "has read permission"
+fi
+
+
+
+
+
+"fileper.sh" 34L, 405C written
+[dmgv@LinuxServer ~]$ ls
+a.out         dirdetails.c  fcfs.c      func1.sh    optimal.c    stdit
+armstrong.sh  dirsyscall.c  ff          gcd.sh      palin.sh     student
+banker.c      ececvp.c      fib.sh      it          pidgid.c     vfork.c
+class         enoent.c      fifo.c      lru.c       readwrite.c  wait.c
+d1            ENOENT.c      file3       memory.c    round.c
+d2            err.c         fileper.sh  nestfun.c   sevendi.sh
+datakey.c     excel.c       fork.c      nestfun.sh  SJF.c
+[dmgv@LinuxServer ~]$ touch  filetest
+
+
+
+
+ [dmgv@LinuxServer ~]$ sh fileper.sh filetest d1 d10 fib.sh xyz
+filetest empty file
+filetest it is a file
+filetest  is not a directory
+filetest has read permission
+filetest has write permission
+d1 file exist
+d1 not a file
+d1 it is a directory
+d1 has read permission
+d1 has write permission
+d1  has execute permission
+d10 empty file
+d10 not a file
+d10  is not a directory
+fib.sh file exist
+fib.sh it is a file
+fib.sh  is not a directory
+fib.sh has read permission
+fib.sh has write permission
+xyz empty file
+xyz not a file
+xyz  is not a directory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3.A shell script to print Fibonacci series of a given number.
+
+
+
+echo enter n
+read n
+i=0
+a=0
+b=1
+echo $a
+echo $b
+n=`expr $n - 2`
+while [ $i -lt $n ]
+do
+c=`expr $a + $b`
+a=$b
+b=$c
+echo $c
+i=`expr $i + 1`
+done
+
+
+
+
+
+
+
+
+~
+"fib.sh" 16L, 143C written
+[dmgv@LinuxServer ~]$ sh fib.sh
+enter n
+8
+0
+1
+1
+2
+3
+5
+8
+13
+
+
+
+[dmgv@LinuxServer ~]$ sh fib.sh
+enter n
+25
+0
+1
+1
+2
+3
+5
+8
+13
+21
+34
+55
+89
+144
+233
+377
+610
+987
+1597
+2584
+4181
+6765
+10946
+17711
+28657
+46368
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4.A shell script to give GCD of two numbers
+
+
+
+
+echo "enter the two numbers"
+read a b
+m=$a
+if [ $b -lt $m ]
+then
+m=$b
+fi
+while [ $m -ne 0 ]
+do
+x=`expr $a % $m`
+y=`expr $b % $m`
+if [ $x -eq 0 -a $y -eq 0 ]
+then
+echo gcd of $a and $b is $m
+break
+fi
+m=`expr $m - 1`
+done
+
+
+~
+~
+"gcd.sh" 20L, 222C written
+[dmgv@LinuxServer ~]$ sh gcd.sh
+enter the two numbers
+45 625
+gcd of 45 and 625 is 5
+[dmgv@LinuxServer ~]$ sh gcd.sh
+enter the two numbers
+27 57
+gcd of 27 and 57 is 3
+[dmgv@LinuxServer ~]$ sh gcd.sh
+enter the two numbers
+19 17
+gcd of 19 and 17 is 1
+
+
+
+
+
+5.A shell script to check whether the given number and string are Palindrome or not.
+
+
+
+echo $1
+len=`echo $1 |wc -c`
+i=0
+echo $len
+while [ $i -lt $len ]
+do
+temp=`echo $1 |cut -c $len`
+rev=`echo $rev$temp`
+len=`expr $len - 1`
+done
+if [ "$1" = "$rev" ]
+then
+echo is a palindrome
+else
+echo not a palindrome
+fi
+
+
+~
+"palin.sh" 16L, 220C written
+[dmgv@LinuxServer ~]$ sh palin.sh
+
+1
+is a palindrome
+[dmgv@LinuxServer ~]$ sh palin.sh 12345
+12345
+6
+not a palindrome
+[dmgv@LinuxServer ~]$ sh palin.sh 123454321
+123454321
+10
+is a palindrome
+[dmgv@LinuxServer ~]$ sh palin.sh liril
+liril
+6
+is a palindrome
+[dmgv@LinuxServer ~]$ sh palin.sh lux
+lux
+4
+not a palindrome
+6.A shell script to print digits of a Seven digit number.
+
+
+
+
+echo enter a 7 digit number
+read num
+n=1
+while [ $n -le 7 ]
+do
+a=`echo $num | cut -c $n`
+echo $a
+n=`expr $n + 2`
+done
+
+
+
+
+
+~
+"sevendi.sh" 10L, 120C written
+[dmgv@LinuxServer ~]$ sh sevendi.sh
+enter a 7 digit number
+6783241
+6
+8
+2
+1
+
+
+
+ [dmgv@LinuxServer ~]$ sh sevendi.sh
+enter a 7 digit number
+9000567
+9
+0
+5
+7
